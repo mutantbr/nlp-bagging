@@ -1,23 +1,25 @@
 'use strict';
 
 const axios = require('axios');
-const type = require('../types/type')
+const type = require('../types/type');
+
+let Classification = require('../models/classification');
 
 function NLP(configs) {
   this.configs = configs.map(function(config){
-    return new type[config.type](config); 
+    return new type[config.type](config);
   });
 }
 
 NLP.prototype.classify = function(txt) {
-  axios
+  let configs = this.configs;
+  return axios
     .all(this.configs.map(function (c) { return c.get(txt) }))
     .then(function (responses) {
-      responses.map(function(r, i) {
-        console.log(r.data);
-        console.log(i);
+      return responses.map(function(r, i) {
+        let config = configs[i];
+        config.setResponse(r.data);
+        return new Classification(config.getIntent(), config.getScore(), config.getReturnValue());
       });
     });
 }
-
-module.exports = NLP;

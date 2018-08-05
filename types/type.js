@@ -8,5 +8,5 @@ const Luis = require('./luis')
  * @return map type to class
  */
 module.exports = {
-      'Luis': Luis
-    }; 
+    'Luis': Luis
+  };
