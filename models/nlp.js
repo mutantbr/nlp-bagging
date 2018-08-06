@@ -7,7 +7,7 @@ let Classification = require('../models/classification');
 
 function NLP(configs) {
   this.configs = configs.map(function(config){
-    return new type[config.type](config);
+    return new type[config.type](config.config);
   });
 }
 
@@ -23,3 +23,5 @@ NLP.prototype.classify = function(txt) {
       });
     });
 }
+
+module.exports = NLP
