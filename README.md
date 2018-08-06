@@ -7,10 +7,12 @@ Nodes Bagging for NLP Tools
 
 ## Installation
 
-  `npm install nlp-bagging`
+  `npm i -S @mutantbr/nlp-bagging`
 
 ## Usage
   ```node
+    let NlpBagging = require('@mutantbr/nlp-bagging');
+
     let nlpBagging = new NlpBagging([{
       type: 'Luis',
       config: {
@@ -44,13 +46,13 @@ Nodes Bagging for NLP Tools
     }]);
 
     nlpBagging
-      .getIntent('hi')
+      .detectIntent('hi')
       .then(function(i) {
         console.log(i.topScoringIntent);
       });
 
     nlpBagging
-      .getIntent('are you a bot')
+      .detectIntent('are you a bot')
       .then(function(i) {
         console.log(i.topScoringIntent);
       });
