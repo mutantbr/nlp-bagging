@@ -5,14 +5,28 @@
  * @param {Classification[]} classifications
  * @return {Object} returnValue of classification
  */
-module.exports = function(classifications) {
+
+
+function execThreshold(text, classification, threshold) {
+  let wordCount = text.split(' ').length;
+
+  if (
+    (classification.score < threshold.score.lte && wordCount <= threshold.wordCount) || 
+    (classification.score < threshold.score.gt && wordCount > threshold.wordCount)
+  )
+    return threshold.returnValue;
+  
+  return classification.returnValue;
+}
+
+module.exports = function(classifications, threshold, text) {
   let groupToValues = classifications.reduce(function (obj, item) {
     obj[item.intent] = obj[item.intent] || [];
     obj[item.intent].push(item);
     return obj;
   }, {});
 
-  return Object.keys(
+  let classification =  Object.keys(
     classifications.reduce(function (obj, item) {
         obj[item.intent] = obj[item.intent] || [];
         obj[item.intent].push(item);
@@ -37,6 +51,10 @@ module.exports = function(classifications) {
     .shift()
     .scores
     .sort(function(a, b){ return b.score - a.score })
-    .shift()
-    .returnValue;
+    .shift();
+
+  if (typeof threshold === 'undefined')
+    return classification.returnValue;
+
+  return execThreshold(text, classification, threshold);
 };
