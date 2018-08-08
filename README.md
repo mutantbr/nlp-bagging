@@ -54,7 +54,8 @@ Nodes Bagging for NLP Tools
           timezoneOffset: 0
         }
       }
-    }]);
+    }],
+    thresholdConfig);
 
     bagging
       .detectIntent('hi')
