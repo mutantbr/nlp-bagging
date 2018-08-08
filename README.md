@@ -13,7 +13,18 @@ Nodes Bagging for NLP Tools
   ```node
     let NlpBagging = require('@mutantbr/nlp-bagging');
 
-    let nlpBagging = new NlpBagging([{
+    let thresholdConfig = {
+      wordCount: 4,
+      score: {
+        lte: 0.6,
+        gt: 0.4
+      },
+      returnValue: 'None'
+    }
+
+    // threshold is an optional param
+
+    let bagging = new NlpBagging([{
       type: 'Luis',
       config: {
         url: 'https://brazilsouth.api.cognitive.microsoft.com/luis/v2.0/apps/aaa111',
@@ -45,13 +56,13 @@ Nodes Bagging for NLP Tools
       }
     }]);
 
-    nlpBagging
+    bagging
       .detectIntent('hi')
       .then(function(i) {
         console.log(i.topScoringIntent);
       });
 
-    nlpBagging
+    bagging
       .detectIntent('are you a bot')
       .then(function(i) {
         console.log(i.topScoringIntent);
