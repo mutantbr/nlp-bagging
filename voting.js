@@ -53,7 +53,7 @@ module.exports = function(classifications, threshold, text) {
     .sort(function(a, b){ return b.score - a.score })
     .shift();
 
-  if (typeof threshold === 'undefined')
+  if (!threshold)
     return classification.returnValue;
 
   return execThreshold(text, classification, threshold);
